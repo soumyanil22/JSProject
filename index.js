@@ -1,6 +1,6 @@
 const taskContainer = document.querySelector(".task__container");
 
-const generateNewCard = (taskData) => {`
+const generateNewCard = (taskData) => `
 <div class="col-md-6 col-lg-3" id=${taskData.id}>
     <div class="card text-center">
         <div class="card-header d-flex justify-content-end gap-2">
@@ -22,11 +22,11 @@ const generateNewCard = (taskData) => {`
     <div class="card-footer text-muted float-end">
         <button type="button" class="btn btn-outline-primary">Open Task</button>
 </div>
-`;}
+`;
 
 const saveChanges = () => {
     const taskData = {
-        id: `${Date.now()}`,
+        id: `${Date.now()}`, //unique number for id
         imageUrl: document.getElementById("imageurl").value,
         taskTitle: document.getElementById("tasktitle").value,
         taskType: document.getElementById("tasktype").value,
