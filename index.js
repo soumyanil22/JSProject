@@ -27,37 +27,42 @@ const generateNewCard = (taskData) => `
 `;
 
 const loadInitialCardData = () => {
- 
-    const getCardData = localStorage.getItem("tasky");
+  // localstorage to get tasky card data
+  const getCardData = localStorage.getItem("tasky");
 
-    const {cards} = JSON.parse(getCardData);
+  // convert from string to normal object
+  const { cards } = JSON.parse(getCardData);
 
-    cards.map((cardObject) => {
-
-        taskContainer.insertAdjacentHTML("beforeend", generateNewCard(cardObject));
-
-        globalStore.push(cardObject);
-
-    })
-
-        
-
+  // loop over those array of objects to create HTML card, inject it to DOM
+  cards.map((cardObject) => {
+    taskContainer.insertAdjacentHTML("beforeend", generateNewCard(cardObject));
+    // update out globalStore
+    globalStore.push(cardObject);
+  });
 };
 
 const saveChanges = () => {
-    const taskData = {
-        id: `${Date.now()}`, //unique number for id
-        imageUrl: document.getElementById("imageurl").value,
-        taskTitle: document.getElementById("tasktitle").value,
-        taskType: document.getElementById("tasktype").value,
-        taskDescription: document.getElementById("taskdescription").value, 
-    };
-    
+  const taskData = {
+    id: `${Date.now()}`, //unique number for id
+    imageUrl: document.getElementById("imageurl").value,
+    taskTitle: document.getElementById("tasktitle").value,
+    taskType: document.getElementById("tasktype").value,
+    taskDescription: document.getElementById("taskdescription").value,
+  };
 
-    taskContainer.insertAdjacentHTML("beforeend", generateNewCard(taskData));
+  taskContainer.insertAdjacentHTML("beforeend", generateNewCard(taskData));
 
-    globalStore.push(taskData);
+  globalStore.push(taskData);
 
-    localStorage.setItem("tasky", JSON.stringify({cards:globalStore}));
+  localStorage.setItem("tasky", JSON.stringify({ cards: globalStore }));
 };
- 
+
+const deleteCard = (event) => {
+  event = window.event;
+
+  const targetID = event.target.id;
+
+  const newArray = globalStore.filter(
+    (cardObject) => cardObject.id !== targetID
+  );
+};
